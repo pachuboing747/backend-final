@@ -1,0 +1,63 @@
+<div class="uk-padding-large uk-child-width-1-1" uk-grid>
+    <h3 class="centrar" style="font-weight: bold; color: black">Registrate a nuestra Web</h3>
+    <form action="" method="post" class="centrar uk-border">
+
+        <div class="uk-margin">
+        <div class="uk-inline">
+            <input class="uk-input uk-border-rounded" name="first_name" type="text" placeholder="Nombre" required>
+        </div>
+        </div>
+
+        <div class="uk-margin">
+        <div class="uk-inline">
+            <input name="last_name" class="uk-input uk-border-rounded" type="text" placeholder="Apellido" required>
+        </div>
+        </div>
+
+        <div class="uk-margin">
+        <div class="uk-inline">
+            <input name="email" class="uk-input uk-border-rounded" type="text" placeholder="Email" required>
+        </div>
+        </div>
+
+        <div class="uk-margin">
+        <div class="uk-inline">
+            <input name="age" class="uk-input uk-border-rounded" type="text" placeholder="Edad" required>
+        </div>
+        </div>
+
+        <div class="uk-margin">
+        <div class="uk-inline">
+            <input name="role" class="uk-input uk-border-rounded" type="text" placeholder="Role: Customer o Premium" required>
+        </div>
+        </div>
+
+        <div class="uk-margin">
+        <div class="uk-inline">
+            <input name="password" class="uk-input uk-border-rounded" type="password" placeholder="Contraseña" required>
+        </div>
+        </div>
+
+        <div class="uk-margin">
+        <div class="uk-inline">
+            <input name="password2" class="uk-input uk-border-rounded" type="password" placeholder="Confirma Contraseña" required>
+        </div>
+        </div>
+
+        <div class="uk-margin">
+        <div class="uk-inline" style="color: black;">
+            <span>Ya tienes cuenta? <a href="/login" style="color: blue;">Inicia sesion!</a></span>
+        </div>
+        </div>
+        
+        {{#if error}}
+        <div class="uk-margin">
+            <div class="uk-inline">
+            <span class="uk-form-danger" style="font-weight: bold;">{{error}}</span>
+            </div>
+        </div>
+        {{/if}}
+
+        <button class="uk-button uk-button-default uk-border-rounded boton">Registrarte</button>
+    </form>
+</div>

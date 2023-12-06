@@ -1,0 +1,23 @@
+<div class="uk-padding-large uk-child-width-1-1" uk-grid style="height: 300px;">
+    <ul class="centrar" style="list-style: none; color: black; font-weight: 500;">
+        <li>Nombre: {{first_name}} {{last_name}}</li>
+        <li>Email: {{email}}</li>
+        <li>Edad: {{age}}</li>
+        <li>Rol: {{role}}</li>
+    </ul>
+
+    {{#if user.isPublic}}
+    <div class="centrar">
+        <a class="rol" href="/api/users/premiumC/{{_id}}">
+            <button class="boton">Cambiar ROL del usuario a Premium</button>
+        </a>
+    </div>
+    {{/if}}
+    {{#if user.isPremium}}
+    <div class="centrar">
+        <a class="rol" href="/api/users/premiumC/{{_id}}">
+            <button class="boton">Cambiar ROL del usuario a Customer</button>
+        </a>
+    </div>
+    {{/if}}
+</div>

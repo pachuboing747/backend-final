@@ -1,0 +1,26 @@
+#page-background {
+    background-color:darkseagreen
+}
+.user{
+    display: none;
+}
+
+.img {
+    display: none;
+}
+
+.centrar {
+    text-align: center;
+}
+
+.boton {
+    background-color: black;
+    color: white;
+    border: solid 1px white;
+    border-radius: 10px;
+}
+
+.boton:hover {
+    background-color: white;
+    color: black;
+}

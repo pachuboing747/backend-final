@@ -1,0 +1,30 @@
+#page-background {
+    background-color:darkseagreen
+}
+
+#page-title {
+    text-align: center;
+    font-weight: bold;
+    color: black;
+}
+
+.img {
+    display: none;
+}
+
+.user {
+    display: none;
+}
+
+.boton {
+    background-color: black;
+    color: white;
+    border: solid 1px white;
+    border-radius: 10px;
+}
+
+.boton:hover {
+    background-color: white;
+    color: black;
+}
+

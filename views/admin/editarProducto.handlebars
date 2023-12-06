@@ -1,0 +1,62 @@
+<div class="uk-margin-top">
+    <form class="uk-form-stacked" action="/admin/editarProducto" method="POST">
+        <div class="uk-margin">
+            <label class="uk-form-label" for="form-stacked-titulo" style="font-weight: bold;">Id del Producto</label>
+            <div class="uk-form-controls">
+                <input id="form-stacked-id" class="uk-input" type="text" name="id" placeholder="Insertar el id del producto" required>
+            </div>
+        </div>
+
+        <div class="uk-margin">
+            <label class="uk-form-label" for="form-stacked-titulo" style="font-weight: bold;">Titulo</label>
+            <div class="uk-form-controls">
+                <input id="form-stacked-titulo" class="uk-input" type="text" name="title" placeholder="ej: Chocolate" required>
+            </div>
+        </div>
+
+        <div class="uk-margin">
+            <label class="uk-form-label" for="form-stacked-codigo" style="font-weight: bold;">Codigo</label>
+            <div class="uk-form-controls">
+                <input id="form-stacked-codigo" class="uk-input" type="text" name="code" placeholder="ej: a065" required>
+            </div>
+        </div>
+
+
+        <div class="uk-margin">
+            <label class="uk-form-label" for="form-stacked-text" style="font-weight: bold;">Precio</label>
+            <div class="uk-form-controls">    
+                <input id="form-stacked-text" class="uk-input" type="number" name="price" placeholder="ej: 200" required>
+            </div>
+        </div>
+
+        <div class="uk-margin">
+            <label class="uk-form-label" for="form-stacked-stock" style="font-weight: bold;">Stock</label>
+            <div class="uk-form-controls">
+                <input id="form-stacked-stock" class="uk-input" type="text" name="stock" placeholder="ej: 5" required>
+            </div>
+        </div>
+
+        <div class="uk-margin">
+            <label class="uk-form-label" for="form-stacked-foto" style="font-weight: bold;">Categoria</label>
+            <div class="uk-form-controls">
+                <input id="form-stacked-category" class="uk-input" type="text" name="category" placeholder="ej: Golosina" required>
+            </div>
+        </div>
+
+        <div class="uk-margin">
+            <label class="uk-form-label" for="form-stacked-foto" style="font-weight: bold;">Link Foto</label>
+            <div class="uk-form-controls">
+                <input id="form-stacked-foto" class="uk-input" type="text" name="thumbnail" placeholder="static/img/NOMBREDELAIMAGEN.png" required>
+            </div>
+        </div>
+
+        <div class="uk-margin">
+            <label class="uk-form-label" for="form-stacked-description" style="font-weight: bold;">Descripción</label>
+            <div class="uk-form-controls">
+                <textarea id="form-stacked-description" class="uk-textarea" rows="5" name="description" required></textarea>
+            </div>
+        </div>
+
+        <button class="uk-button uk-button-secondary uk-button-small uk-margin-top boton" type="submit">Editar</button>
+    </form>
+</div>

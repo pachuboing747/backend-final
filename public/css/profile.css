@@ -1,0 +1,41 @@
+#page-background {
+    background-color:darkseagreen
+}
+
+#page-title {
+    text-align: center;
+    font-weight: bold;
+    color: black;
+    text-decoration: underline;
+}
+
+.user{
+    display: none;
+}
+
+.img {
+    display: none;
+}
+
+.centrar {
+    text-align: center;
+}
+
+.boton {
+    background-color: black;
+    color: white;
+    border: solid 1px white;
+    border-radius: 10px;
+    text-align: center;
+    width: 250px;
+    cursor: pointer;
+}
+
+.boton:hover {
+    background-color: white;
+    color: black;
+}
+
+.rol {
+    width: 150px;
+}

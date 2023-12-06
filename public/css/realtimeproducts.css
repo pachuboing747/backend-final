@@ -1,0 +1,15 @@
+#page-title {
+    text-align: center;
+    font-weight: bold;
+    color: black;
+    text-decoration: underline;
+}
+
+#page-background {
+    background-color: rgb(179, 179, 179);
+}
+
+.img {
+    text-align: center;
+    border-radius: 20px;
+}

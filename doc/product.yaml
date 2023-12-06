@@ -1,0 +1,178 @@
+paths:
+  /api/products:
+    get:
+      tags:
+        - Products
+      summary: Obtener todos los productos.
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Product'
+        500:
+          description: Failure
+    post:
+      tags: 
+        - Products
+      summary: Crear un nuevo producto
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/schemas/Product'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#components/responses/ProductPostSuccess'
+        500:
+          description: Failure
+  /api/products/{pid}:
+    get:
+      summary: Obtener producto por ID
+      tags:
+        - Products
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: El id del producto tomado de Mongo
+          schema:
+            $type: string
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema: 
+                $ref: '#components/schemas/Success'
+        500:
+          description: Failure
+    put:
+      summary: Modificar un producto por ID
+      tags:
+        - Products
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: El id del producto tomado de mongo
+          schema:
+            $type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/responses/ProductPostSuccess'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema: 
+                $ref: '#components/schemas/Success'
+        500:
+          description: Failure
+    delete:
+      summary: Borrar un producto por ID
+      tags:
+        - Products
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: El id del producto tomado de mongo
+          schema:
+            $type: string
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema: 
+                $ref: '#components/schemas/Success'
+        500:
+          description: Failure
+
+components:
+  responses:
+    ProductPostSuccess:
+      type: object
+      properties:
+        status:
+          type: string
+        payload:
+          type: object
+          $ref: '#components/schemas/Product'
+  schemas:
+    Success:
+      type: object
+      properties:
+        status:
+          type: string
+        message: 
+          type: string
+    Product:
+      type: object
+      properties:
+        _id:
+          type: string
+          fomrat: ObjectId
+          description: Id de Mongo
+        status:
+          type: Boolean
+          default: true
+        title:
+          type: string
+          required: true
+          description: Titulo del producto
+        description:
+          type: string
+          default: 'Sin descripcion'
+          description: Descripcion del producto
+        code:
+          type: string
+          required: true
+          description: Codigo del producto
+        price:
+          type: number
+          required: true
+          description: Precio del producto
+        stock:
+          type: number
+          default: 0
+          description: Stock del prodcuto
+        category: 
+          type: string
+          description: Categoria a la que pertenece el producto
+        thumbnail: 
+          type: string
+          format: Array
+          default: []
+          description: Imagen del producto
+        owner:
+          type: string
+          default: admin
+      example:
+        _id: ObjectId('XXX')
+        status: true
+        title: Leche
+        description: Leche La serenisima
+        code: a056
+        price: 550
+        stock: 296
+        category: Lacteos
+        thumbnail: [static/img/agua.jfif]
+        owner: admin
+
+
+

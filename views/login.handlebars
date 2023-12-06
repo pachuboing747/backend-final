@@ -1,0 +1,47 @@
+<div class="uk-padding-large uk-child-width-1-1" uk-grid>
+    <h3 class="centrar">Inicia sesion</h3>
+    <form action="" method="post" class="uk-border-rounded centrar">
+        <div class="uk-margin">
+            <div class="uk-inline">
+                <span class="uk-form-icon" uk-icon="icon: user"></span>
+                <input name="email" class="uk-input uk-border-rounded" type="text" aria-label="Not clickable icon" required>
+            </div>
+        </div>
+
+        <div class="uk-margin">
+            <div class="uk-inline">
+                <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: lock"></span>
+                <input name="password" class="uk-input uk-border-rounded" type="password" aria-label="Not clickable icon" required>
+            </div>
+        </div>
+
+        <div class="uk-margin">
+            <div class="uk-inline" style="color: black;">
+                <span>No tienes cuenta? <a href="/signup" style="color: blue;">Registrate!</a></span>
+            </div>
+        </div>
+
+        <div class="uk-margin">
+            <div class="uk-inline" style="color: black;">
+                <span>Ingresa con <a href="/github" style="color: blue;">GitHub!</a></span>
+            </div>
+        </div>
+
+        <div class="uk-margin">
+            <div class="uk-inline">
+                <span style="color: black;">No recuerdas tu contraseña? <a href="/resetpasswordtoken" style="color: blue;">Resetea tu password!</a></span>
+            </div>
+        </div>
+
+        {{#if error}}
+        <div class="uk-margin">
+            <div class="uk-inline">
+            <span class="uk-form-danger" style="font-weight: bold;">{{error}}</span>
+            </div>
+        </div>
+        {{/if}}
+        
+
+        <button class="uk-button uk-button-default uk-border-rounded boton">Entrar</button>
+    </form>
+</div>

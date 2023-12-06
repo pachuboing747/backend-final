@@ -1,0 +1,132 @@
+[
+  {
+    "status": true,
+    "title": "Dulce de leche",
+    "description": "Sin description",
+    "code": "a20",
+    "price": 500,
+    "stock": 15,
+    "category": "Lacteos",
+    "thumbnail": [
+      "static/img/dulceleche.jfif"
+    ],
+    "id": 1
+  },
+  {
+    "status": true,
+    "title": "Crema de Leche",
+    "description": "Sin description",
+    "code": "a21",
+    "price": 365,
+    "stock": 15,
+    "category": "Lacteos",
+    "thumbnail": [
+      "static/img/crema.webp"
+    ],
+    "id": 2
+  },
+  {
+    "status": true,
+    "title": "Manteca",
+    "description": "Sin description",
+    "code": "a22",
+    "price": 499,
+    "stock": 15,
+    "category": "Lacteos",
+    "thumbnail": [
+      "static/img/manteca.jfif"
+    ],
+    "id": 3
+  },
+  {
+    "status": true,
+    "title": "Agua Mineral",
+    "description": "Sin description",
+    "code": "a23",
+    "price": 200,
+    "stock": 15,
+    "category": "Aguas",
+    "thumbnail": [
+      "static/img/agua.jfif"
+    ],
+    "id": 4
+  },
+  {
+    "status": true,
+    "title": "Arroz",
+    "description": "Sin description",
+    "code": "a24",
+    "price": 200,
+    "stock": 15,
+    "category": "Secos",
+    "thumbnail": [
+      "static/img/arroz.jfif"
+    ],
+    "id": 5
+  },
+  {
+    "status": true,
+    "title": "Azucar",
+    "description": "Sin description",
+    "code": "a25",
+    "price": 650,
+    "stock": 15,
+    "category": "Secos",
+    "thumbnail": [
+      "static/img/azucar.jfif"
+    ],
+    "id": 6
+  },
+  {
+    "status": true,
+    "title": "Tomate",
+    "description": "Sin description",
+    "code": "a26",
+    "price": 150,
+    "stock": 15,
+    "category": "Verduleria",
+    "thumbnail": [
+      "static/img/tomate.avif"
+    ],
+    "id": 7
+  },
+  {
+    "status": true,
+    "title": "Carbon",
+    "description": "Sin description",
+    "code": "a27",
+    "price": 230,
+    "stock": 15,
+    "category": "Verduleria",
+    "thumbnail": [
+      "static/img/carbon.jpg"
+    ],
+    "id": 8
+  },
+  {
+    "status": true,
+    "title": "Leche",
+    "description": "Sin description",
+    "code": "a28",
+    "price": 199,
+    "stock": 15,
+    "category": "Lacteos",
+    "thumbnail": [
+      "static/img/leche.jpg"
+    ],
+    "id": 9
+  },
+  {
+    "status": true,
+    "title": "Alafajor",
+    "description": "Sin description",
+    "code": "a32",
+    "price": 820,
+    "stock": 80,
+    "category": "Dulces",
+    "thumbnail": [
+      "static/img/alfajor.jpg"
+    ],
+    "id": 10
+  }
+]

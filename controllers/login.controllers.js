@@ -37,10 +37,11 @@ class LoginController {
     // Mostrar Profile
     async getProfile (req, res) {
 
-        const cart = await cartManager.getCartById(req.user.cart._id)
+        const cartId = req.user?.cart?._id;
+        const cart = cartId ? await cartManager.getCartById(cartId) : null;
         res.render('profile', {
             ...req.user,
-            title: `Perfil de ${req.user.first_name}`,
+            title: `Perfil de ${req.user.firstname}`,
             style: 'profile',
             user: req.user ? {
                 ...req.user,
@@ -48,13 +49,13 @@ class LoginController {
                 isPublic: req.user.role == 'Customer',
                 isPremium: req.user.role == 'Premium'
             } : null,
-            idCart: cart._id
+            idCart: cart ? cart._id : null
         })
     }
 
     // Mostrar Logout
     async getLogout (req, res) {
-        const { first_name, last_name, _id } = req.user
+        const { firstname, lastname, _id } = req.user
 
         //FECHA
         const today = new Date()    
@@ -66,7 +67,7 @@ class LoginController {
                 await userManager.updateUser(_id, {...user, last_connection: `Disconnect ${today}`})
 
                 res.render('logout', {
-                    name: `${first_name} ${last_name}`,
+                    name: `${firstname} ${lastname}`,
                     style: 'login'
                 })
                 
@@ -130,7 +131,7 @@ class LoginController {
         setTimeout(async () => {
             await tokenPasswordManager.deleteToken(tokenP.token)
         }, 3600000)
-        const resetLink = `https://proyectocoderhouse.up.railway.app/resetpassword?token=${resetToken}`
+        // const resetLink = `https://proyectocoderhouse.up.railway.app/resetpassword?token=${resetToken}`
 
         const template = `
         <h2>¡Hola ${user.first_name}!</h2>
@@ -202,7 +203,7 @@ class LoginController {
     
         req.session.user = {
             id: user.id,
-            name: user.first_name,
+            name: user.firstname,
             role: user?.role ?? "Customer",
             email: user.email
         }

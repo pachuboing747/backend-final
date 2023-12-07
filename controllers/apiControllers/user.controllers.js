@@ -75,15 +75,15 @@ class UserController {
     // Creacion de Usuario
     async addUser (req, res, next) {
 
-        const { first_name, last_name, email, age, role, password } = req.body
+        const { firstname, lastname, email, age, role, password } = req.body
         const { body } = req
         const users = await userManager.getUsers()
     
-        if(!first_name || !last_name || !email || !age || !role || !password){
+        if(!firstname || !lastname || !email || !age || !role || !password){
             next(CustomError.createError({
                 name: 'CAMPOS OBLIGATORIOS',
                 message: 'Todos los campos son obligatorios',
-                cause: userErrorInfo({ first_name, last_name, email, age, role, password }),
+                cause: userErrorInfo({ firstname, lastname, email, age, role, password }),
                 code: EErrors.CAMPOS_OBLIGATORIOS,
                 statusCode: 400
             }))
@@ -100,7 +100,7 @@ class UserController {
     
             const result = await userManager.addUser( body )
             res.status(201).send({
-                Created: `El usuario ha sido creado con exito. ¡Bienvenido ${body.last_name}!`, payload: result
+                Created: `El usuario ha sido creado con exito. ¡Bienvenido ${body.lastname}!`, payload: result
             })
     
         }
@@ -200,7 +200,7 @@ class UserController {
                     next(CustomError.createError({
                         name: 'PERMISO BLOQUEADO',
                         message: 'El usuario no puede ser un Customer/Premium',
-                        cause: `el usuario: ${userId.first_name}, no tiene la documentacion necesaria para ser un Customer/Premium`,
+                        cause: `el usuario: ${userId.firstname}, no tiene la documentacion necesaria para ser un Customer/Premium`,
                         code: EErrors.PERMISOS_BLOQUEADOS,
                         statusCode: 401
                     }))
@@ -209,7 +209,7 @@ class UserController {
 
                 const user = await userManager.updateUser(uid, {role: 'Premium'})
                 if(user.matchedCount >= 1){
-                    logger.info(`El usuario ${userId.first_name} paso a ser Premium`)
+                    logger.info(`El usuario ${userId.firstname} paso a ser Premium`)
                     res.status(202).send({Accepted: `El usuario con id: ${uid} paso a ser Premium!.`})
                     return
                 }
@@ -218,7 +218,7 @@ class UserController {
             if(userId.role == 'Premium'){
                 const user = await userManager.updateUser(uid, {role: 'Customer'})
                 if(user.matchedCount >= 1){
-                    logger.info(`El usuario ${userId.first_name} paso a ser Customer`)
+                    logger.info(`El usuario ${userId.firstname} paso a ser Customer`)
                     res.status(202).send({Accepted: `El usuario con id: ${uid} paso a ser Customer!.`})
                     return
                 }
@@ -227,7 +227,7 @@ class UserController {
             next(CustomError.createError({
                 name: 'PERMISO BLOQUEADO',
                 message: 'El usuario no puede ser un Customer/Premium',
-                cause: `el usuario: ${userId.first_name}, no tiene los permisos necesarios para ser un Customer/Premium`,
+                cause: `el usuario: ${userId.firstname}, no tiene los permisos necesarios para ser un Customer/Premium`,
                 code: EErrors.PERMISOS_BLOQUEADOS,
                 statusCode: 401
             }))
@@ -240,50 +240,74 @@ class UserController {
         }
 
     }
+
     // Mostrar en Handlebars
-    async premiumCustomerView (req, res){
-        const uid = req.params.uid
 
-        try {
-            const userId = await userManager.getUserById(uid)
-    
-            if(userId.role == 'Customer'){
+   
+async premiumCustomerView(req, res) {
+    const uid = req.params.uid;
 
+    try {
+        if (!req.user) {
+            return res.status(401).send({
+                message: 'Usuario no autenticado'
+            });
+        }
+
+        if (!req.user.cart) {
+            const cartId = req.user && req.user.cart ? req.user.cart._id : null;
+            return res.render('errorCarrito', {
+                title: '¡No posee la documentación necesaria para pasar a ser Premium!',
+                user: req.user ? {
+                    ...req.user,
+                    isAdmin: req.user.role == 'admin',
+                    isPublic: req.user.role == 'Customer',
+                    isPremium: req.user.role == 'Premium'
+                } : null,
+                idCart: cartId,
+                style: 'order'
+            });
+        }
+
+        const userId = await userManager.getUserById(uid);
+
+            if (userId.role == 'Customer') {
                 const verificacion = ["identificacion", "comprobante de domicilio", "comprobante de estado de cuenta"]
-                const verificacionOK = verificacion.every(ver => 
+                const verificacionOK = verificacion.every(ver =>
                     userId.documents.some(obj => obj.name === ver)
                 )
 
-                if(!verificacionOK){
-                    const cartId = await cartManager.getCartById(req.user.cart._id)
+                if (!verificacionOK) {
+                    const cartId = req.user.cart ? req.user.cart._id : null;
                     res.render('errorCarrito', {
-                        title: '¡No posee la documentacion necesarioa para pasar a ser Premium!',
+                        title: '¡No posee la documentación necesaria para pasar a ser Premium!',
                         user: req.user ? {
                             ...req.user,
                             isAdmin: req.user.role == 'admin',
                             isPublic: req.user.role == 'Customer',
                             isPremium: req.user.role == 'Premium'
                         } : null,
-                        idCart: cartId._id,
+                        idCart: cartId,
                         style: 'order'
-                    })
-                    return
+                    });
+                    return;
                 }
 
-                const user = await userManager.updateUser(uid, {role: 'Premium'})
-                if(user.matchedCount >= 1){
-                    logger.info(`El usuario ${userId.first_name} paso a ser Premium`)
-                    res.redirect('/profile')
-                    return
+                const user = await userManager.updateUser(uid, { role: 'Premium' });
+
+                if (user.matchedCount >= 1) {
+                    logger.info(`El usuario ${userId.firstname} pasó a ser Premium`);
+                    res.redirect('/profile');
+                    return;
                 }
             }
-    
-            if(userId.role == 'Premium'){
-                const user = await userManager.updateUser(uid, {role: 'Customer'})
-                if(user.matchedCount >= 1){
-                    logger.info(`El usuario ${userId.first_name} paso a ser Customer`)
-                    res.redirect('/profile')
-                    return
+
+            if (userId.role == 'Premium') {
+                const user = await userManager.updateUser(uid, { role: 'Customer' });
+                if (user.matchedCount >= 1) {
+                    logger.info(`El usuario ${userId.firstname} pasó a ser Customer`);
+                    res.redirect('/profile');
+                    return;
                 }
             }
 
@@ -291,10 +315,10 @@ class UserController {
             res.status(500).send({
                 message: 'Ha ocurrido un error en el servidor',
                 exception: error.stack
-            })
+            });
         }
-
     }
+
 
     async premiumAdminView (req, res){
 
@@ -307,7 +331,7 @@ class UserController {
 
                 const user = await userManager.updateUser(uid, {role: 'Premium'})
                 if(user.matchedCount >= 1){
-                    logger.info(`El usuario ${userId.first_name} paso a ser Premium`)
+                    logger.info(`El usuario ${userId.firstname} paso a ser Premium`)
                     res.render('errorCarrito', {
                         title: 'Se cambio el Rol del Usuario',
                         style: 'order',
@@ -325,7 +349,7 @@ class UserController {
             if(userId.role == 'Premium'){
                 const user = await userManager.updateUser(uid, {role: 'Customer'})
                 if(user.matchedCount >= 1){
-                    logger.info(`El usuario ${userId.first_name} paso a ser Customer`)
+                    logger.info(`El usuario ${userId.firstname} paso a ser Customer`)
                     res.render('errorCarrito', {
                         title: 'Se cambio el Rol del Usuario',
                         style: 'order',

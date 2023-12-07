@@ -17,15 +17,13 @@
                     <li class="uk-active">
                         <a href="/">Home</a>
                     </li>
-                    <li class="uk-active">
-                        <a href="/realtimeproducts">Products in Real Time</a>
-                    </li>
+
                     {{#if user.isPublic}}
                     <li class="uk-active">
                         <a href="/chatmessage">Chat</a>
                     </li>
                     <li class="uk-active">
-                        <a href="/carts/{{ idCart }}">Carrito de Compras</a>
+                        <a href="/carts">Carrito de Compras</a>
                     </li>
                     {{/if}}
                     {{#if user.isPremium}}
@@ -33,13 +31,13 @@
                         <a href="/chatmessage">Chat</a>
                     </li>
                     <li class="uk-active">
-                        <a href="/carts/{{ idCart }}">Carrito de Compras</a>
+                        <a href="/carts">Carrito de Compras</a>
                     </li>
                     {{/if}}
 
                     {{#if user}}
                     <li>
-                        <a style="color: black;">Bienvenido, {{user.first_name}}!</a>
+                        <a>Bienvenido, {{user.firstname}}!</a>
                         <div class="uk-navbar-dropdown uk-border-rounded">
                         <ul class="uk-nav uk-navbar-dropdown-nav">
                             <li>
@@ -72,7 +70,7 @@
                     </li>
                     {{else}}
                     <li>
-                        <a href="/login" style="color: black;">Inicia Sesion</a>
+                        <a href="/login">Inicia Sesion</a>
                     </li>    
                     {{/if}}
                 </ul>
@@ -80,7 +78,6 @@
         </nav>
         <div class="uk-width-1-1 uk-margin-remove uk-align-center uk-text-break uk-padding" id="page-background">
             <h2 id="page-title">{{ title }}</h2>
-            <h3 id="page-title" class="user">Bienvenido a la Tienda Online: {{ user.first_name }}</h3>
             {{{body}}}
         </div>
     </div>

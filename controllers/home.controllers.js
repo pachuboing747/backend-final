@@ -107,67 +107,16 @@ class HomeController {
     // Ruta del realtimeproducts
     async getRealTimeProducts (req, res) {
 
-        let { query, page, limit, sort } = req.query
-    
-        if(query){
-            if (!query.startsWith('{"') || !query.endsWith('"}'))
-            res.status(400).send({error: 'Query incorrecto.'})
-    
-            query = JSON.parse(query);
-        }
-    
-        if(sort == 1 || sort == -1 || sort == "" || sort == undefined){
-            sort
-        } else {
-            res.status(400).send({ error: 'Sort incorrecto.'})
-        }
-    
-        const { docs: products, ...pageInfo } = await productManager.getProducts( page, limit, query, sort)
-    
-        // CREACION DE LOS BOTONES SIGUIENTES Y ANTERIOR
-    
-        if(query){
-            pageInfo.prevLink = pageInfo.hasPrevPage ? `https://proyectocoderhouse.up.railway.app/realtimeproducts?page=${pageInfo.prevPage}&limit=${pageInfo.limit}&query=${query}` : ''
-            pageInfo.nextLink = pageInfo.hasNextPage ? `https://proyectocoderhouse.up.railway.app/realtimeproducts?page=${pageInfo.nextPage}&limit=${pageInfo.limit}&query=${query}` : ''
-        } else if (query && sort){
-            pageInfo.prevLink = pageInfo.hasPrevPage ? `https://proyectocoderhouse.up.railway.app/realtimeproducts?page=${pageInfo.prevPage}&limit=${pageInfo.limit}&query=${query}&sort=${sort}` : ''
-    
-            pageInfo.nextLink = pageInfo.hasNextPage ? `https://proyectocoderhouse.up.railway.app/realtimeproducts?page=${pageInfo.nextPage}&limit=${pageInfo.limit}&query=${query}&sort=${sort}` : ''
-        } else {
-            pageInfo.prevLink = pageInfo.hasPrevPage ? `https://proyectocoderhouse.up.railway.app/realtimeproducts?page=${pageInfo.prevPage}&limit=${pageInfo.limit}` : ''
-    
-            pageInfo.nextLink = pageInfo.hasNextPage ? `https://proyectocoderhouse.up.railway.app/realtimeproducts?page=${pageInfo.nextPage}&limit=${pageInfo.limit}` : ''
-        }
-    
-        if(sort){
-            pageInfo.prevLink = pageInfo.hasPrevPage ? `https://proyectocoderhouse.up.railway.app/realtimeproducts?page=${pageInfo.prevPage}&limit=${pageInfo.limit}&sort=${sort}` : ''
-            pageInfo.nextLink = pageInfo.hasNextPage ? `https://proyectocoderhouse.up.railway.app/realtimeproducts?page=${pageInfo.nextPage}&limit=${pageInfo.limit}&sort=${sort}` : ''
-        } else if (query && sort){
-            pageInfo.prevLink = pageInfo.hasPrevPage ? `https://proyectocoderhouse.up.railway.app/realtimeproducts?page=${pageInfo.prevPage}&limit=${pageInfo.limit}&query=${query}&sort=${sort}` : ''
-    
-            pageInfo.nextLink = pageInfo.hasNextPage ? `https://proyectocoderhouse.up.railway.app/realtimeproducts?page=${pageInfo.nextPage}&limit=${pageInfo.limit}&query=${query}&sort=${sort}` : ''
-        } else{
-            
-            pageInfo.prevLink = pageInfo.hasPrevPage ? `https://proyectocoderhouse.up.railway.app/realtimeproducts?page=${pageInfo.prevPage}&limit=${pageInfo.limit}` : ''
-        
-            pageInfo.nextLink = pageInfo.hasNextPage ? `https://proyectocoderhouse.up.railway.app/realtimeproducts?page=${pageInfo.nextPage}&limit=${pageInfo.limit}` : ''
-    
-        }
-    
-        const cart = await cartManager.getCartById(req.user.cart._id)
-    
-        res.render('realtimeproducts', {
-            title: 'Products in Real Time',
-            user: req.user ? {
-                ...req.user,
-                isAdmin: req.user.role == 'admin',
-                isPublic: req.user.role == 'Customer',
-                isPremium: req.user.role == 'Premium'
-            } : null,
-            idCart: cart._id,
-            products,
-            pageInfo,
-            style: 'realtimeproducts'
+        const products = await productManager.getProducts()
+   
+        res.render('realTimeProducts', {
+          title: 'Real Time',
+          products,
+          user: {
+            ...req.user,
+            isAdmin: req.user.role == 'admin',
+          },
+          style: 'home'
         })
     }
 

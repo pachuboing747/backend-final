@@ -7,7 +7,7 @@ const router = Router()
 
 // rutas de home de HTML
 
-router.get('/', autenticacion, homeControllers.getHome)
+router.get('/', homeControllers.getHome)
 router.post('/', homeControllers.postHome)
 
 router.get('/realtimeproducts', autenticacion, homeControllers.getRealTimeProducts)

@@ -15,7 +15,9 @@ const {
 
 const router = Router();
 
-router.get("/", getAll);
+router.get("/", (req, res) => {
+  res.render('carts');
+});
 router.get("/:cid", populate);
 router.post("/", create);
 router.delete("/:id", deleteId, removeProductFromCart);

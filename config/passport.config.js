@@ -39,7 +39,7 @@ const signup = async ( req, email, password, done ) => {
         cartId.save()
 
         return done(null, {
-            name: newUser.first_name,
+            name: newUser.firstname,
             id: newUser._id,
             ...newUser._doc
         })

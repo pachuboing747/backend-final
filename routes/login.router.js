@@ -41,7 +41,7 @@ const signup = async (req, res) => {
         })
         
         req.session.user = {
-            name: newUser.first_name,
+            name: newUser.firstname,
             id: newUser._id,
             ...newUser._doc
         }
@@ -96,7 +96,7 @@ const login = async (req, res) => {
         if(_user.email == "adminCoder@coder.com" && password == "adminCod3r123"){
 
             req.session.user = {
-                name: user.first_name,
+                name: user.firstname,
                 id: user._id,
                 ...user,
                 role: 'admin'
@@ -110,7 +110,7 @@ const login = async (req, res) => {
 
         } else {
             req.session.user = {
-                name: user.first_name,
+                name: user.firstname,
                 id: user._id,
                 ...user
             }

@@ -1,4 +1,3 @@
-
 (async () => {
     require('dotenv').config()
     
@@ -18,13 +17,15 @@
     const { PORT, HOST, MONGO_CONNECT, ADMIN_EMAIL, ADMIN_PASSWORD } = require('./config/config')
     const handleError = require('./middlewares/handleError')
 
-    const { api, home } = require('./routes/index.js')
+    const Routes = require('./routes/index.js')
     const SocketManager = require('./websocket')
     const initPassportLocal = require('./config/passport.init.js')
     const { isValidPassword } = require('./utils/password.js')
     const logger = require('./logger/index')
     const loggerMiddleware = require('./middlewares/logger.middleware')
     const eliminarUsuariosInactivosMiddleware = require('./middlewares/eliminarUsuariosInactivosMiddleware.js')
+
+    const cartsRouter = require ('./routes/carts.router.js')
 
     try {
         
@@ -102,10 +103,16 @@
         })
 
         // ruta del home
-        app.use('/', home)
-        
+        app.use('/', Routes.home)
+
         // ruta de las api
-        app.use('/api', api)
+       // En app.js
+        app.use('/api', (req, res, next) => {
+            req.io = io;
+            next();
+        }, Routes.api);
+
+        app.use('/carts', cartsRouter);
 
         // ruta de la documentacion
         app.use('/apidocs', swaggerUiExpress.serve, swaggerUiExpress.setup(specs))
@@ -127,4 +134,3 @@
         logger.error('No se ha podido conectar a la base de datos')
     }
 })()
-

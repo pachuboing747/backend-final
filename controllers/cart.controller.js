@@ -38,22 +38,30 @@ const getAll = async (req, res) => {
 }
 
 const populate = async (req, res) => {
-    try {
-      const id = req.params.cid;
-      const cart = await cartsManager.getCartById(id);
-  
-      if (!cart) {
-        res.status(404).send("No se encuentra un carrito de compras con el identificador proporcionado");
-      } else if (cart.products.length === 0) {
-        res.status(201).send("Este carrito no contiene productos seleccionados");
-      } else {
-        res.status(201).send(cart);
-      }
-    } catch (error) {
-      console.error("Error al obtener el carrito:", error);
-      res.status(500).send("Ocurrió un error al obtener el carrito");
+  try {
+    const id = req.params.cid;
+    const cart = await cartsManager.getCartById(id);
+
+    if (!cart) {
+      res.status(404).send("No se encuentra un carrito de compras con el identificador proporcionado");
+    } else if (cart.products.length === 0) {
+      res.status(201).send("Este carrito no contiene productos seleccionados");
+    } else {
+      // Renderizar la vista con los datos del carrito
+      res.render('carts', {
+        cartLength: cart.products.length > 0,
+        totalCarrito: calcularTotalDelCarrito(cart.products), // Asegúrate de tener una función para calcular el total del carrito
+        products: cart.products,
+        falseCart: cart.products.length === 0,
+        idCart: cart._id, // Si necesitas el ID del carrito en la vista
+      });
     }
+  } catch (error) {
+    console.error("Error al obtener el carrito:", error);
+    res.status(500).send("Ocurrió un error al obtener el carrito");
+  }
 }
+
 
 const create = async (req, res) => {
   const { body, io } = req;

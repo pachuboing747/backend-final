@@ -1,7 +1,6 @@
 const { Router } = require("express")
 
 const {
-  getAll,
   populate,
   create,
   deleteId,
@@ -15,9 +14,10 @@ const {
 
 const router = Router();
 
-router.get("/", (req, res) => {
+router.get('/', (req, res) => {
   res.render('carts');
 });
+
 router.get("/:cid", populate);
 router.post("/", create);
 router.delete("/:id", deleteId, removeProductFromCart);

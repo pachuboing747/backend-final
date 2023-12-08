@@ -134,7 +134,7 @@ class LoginController {
         // const resetLink = `https://proyectocoderhouse.up.railway.app/resetpassword?token=${resetToken}`
 
         const template = `
-        <h2>¡Hola ${user.first_name}!</h2>
+        <h2>¡Hola ${user.firstname}!</h2>
 
         <h3>Aqui te dejamos el link para poder restablecer tu contraseña</h3>
         <p>${resetLink}</p>

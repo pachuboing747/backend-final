@@ -335,7 +335,7 @@ class CartController {
                     await cartManager.updateProductCart(cid, {quantity: unPurchasedQuantity}, id)
                 }
         
-                cart = await cart.populate({ path: 'user', select: [ 'email', 'first_name', 'last_name' ] })
+                cart = await cart.populate({ path: 'user', select: [ 'email', 'firstname', 'lastname' ] })
         
                 //FECHA
                 const today = new Date()
@@ -360,13 +360,13 @@ class CartController {
                 // Envio de Ticket al mail
         
                 const template = `
-                    <h2>¡Hola ${cart.user.first_name}!</h2>
+                    <h2>¡Hola ${cart.user.firstname}!</h2>
                     <h3>Tu compra fue realizada con exito. Aqui te dejamos el ticket de compra.</h3>    
                     <br>
                     <div style="border: solid 1px black; width: 310px;">
                         <h3 style="font-weight: bold; color: black; text-align: center;">Comprobante de Compra</h3>
                         <ul style="list-style: none; color: black; font-weight: 500;">
-                            <li>Nombre y Apellido: ${cart.user.first_name}, ${cart.user.last_name}</li>
+                            <li>Nombre y Apellido: ${cart.user.firstname}, ${cart.user.lastname}</li>
                             <li>Codigo: ${order.code}</li>
                             <li>Catidad de Productos Comprados: ${order.products.length}</li>
                             <li>Total: $ ${order.total}</li>

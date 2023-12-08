@@ -32,7 +32,7 @@ async function eliminarUsuariosInactivos() {
                 // Envía un correo electrónico al usuario para avisarle que la cuenta fue eliminada
 
                 const template = `
-                <h2>¡Hola ${usuarios.first_name}, ${usuarios.last_name}!</h2>
+                <h2>¡Hola ${usuarios.firstname}, ${usuarios.lastname}!</h2>
                 <h4>Queríamos avisarte que tu cuenta del eCommerce fue eliminada por inactividad.</h4>
                 <h4>Te invitamos a que vuelvas a registrarte para disfrutar las mejores ofertas</h4>
                 <h4>Muchas Gracias.</h4>
@@ -43,7 +43,7 @@ async function eliminarUsuariosInactivos() {
                 mailSenderService.send(subject, usuarios.email, template)
 
                 // Eliminamos los usuarios que tengan más de dos días de inactividad
-                logger.info(`El usuario ${usuarios.first_name} fue eliminado por inactividad`)
+                logger.info(`El usuario ${usuarios.firstname} fue eliminado por inactividad`)
                 await userManager.deleteUser(usuarios._id)
             }
         }

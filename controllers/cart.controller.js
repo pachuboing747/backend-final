@@ -13,18 +13,18 @@ const {checkPermissions} = require("../controllers/user.controller.js")
 
 
 const getAll = async (req, res) => {
+try{
 
-    const { search, max, min, limit } = req.query;
-    const carts = await cartsManager.getCart();
+  const carts = await cartsManager.getCart();
   
-    let filtrados = carts;
+  let filtrados = carts;
   
     if (search) {
       filtrados = filtrados.filter(
         (p) =>
-          p.keywords.includes(search.toLowerCase()) ||
-          p.title.toLowerCase().includes(search.toLowerCase()) ||
-          p.description.toLowerCase().includes(search.toLowerCase())
+        p.keywords.includes(search.toLowerCase()) ||
+        p.title.toLowerCase().includes(search.toLowerCase()) ||
+        p.description.toLowerCase().includes(search.toLowerCase())
       );
     }
   
@@ -35,33 +35,30 @@ const getAll = async (req, res) => {
     }
   
     res.send(filtrados);
+    res.render('carts', { cartLength: carts.length, products: carts});
+  }catch (error) {
+    console.error("Error al obtener los datos del carrito:", error);
+    res.status(500).send("Ocurrió un error al obtener los datos del carrito");
+  }
 }
 
 const populate = async (req, res) => {
   try {
     const id = req.params.cid;
     const cart = await cartsManager.getCartById(id);
-
+  
     if (!cart) {
       res.status(404).send("No se encuentra un carrito de compras con el identificador proporcionado");
     } else if (cart.products.length === 0) {
       res.status(201).send("Este carrito no contiene productos seleccionados");
     } else {
-      // Renderizar la vista con los datos del carrito
-      res.render('carts', {
-        cartLength: cart.products.length > 0,
-        totalCarrito: calcularTotalDelCarrito(cart.products), // Asegúrate de tener una función para calcular el total del carrito
-        products: cart.products,
-        falseCart: cart.products.length === 0,
-        idCart: cart._id, // Si necesitas el ID del carrito en la vista
-      });
+      res.status(201).send(cart);
     }
-  } catch (error) {
+    } catch (error) {
     console.error("Error al obtener el carrito:", error);
     res.status(500).send("Ocurrió un error al obtener el carrito");
   }
 }
-
 
 const create = async (req, res) => {
   const { body, io } = req;

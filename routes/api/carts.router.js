@@ -34,5 +34,7 @@ router.get('/orders/:id/purchase', cartController.getOrderById)
 router.post('/:cid/purchase', productsOutOfStock, cartController.addOrderCart)
 
 router.delete('/orders/:id/purchase', cartController.deleteOrder)
+;
+  
 
 module.exports = router

@@ -24,8 +24,8 @@ const gitHubUser = async (profile, done) => {
         const cart = await cartManager.addCart()
 
         const newUser = {
-            first_name: name.split(" ")[0],
-            last_name: name.split(" ")[1],
+            firstname: name.split(" ")[0],
+            lastname: name.split(" ")[1],
             email: email,
             password: "",
             cart: cart,

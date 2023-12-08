@@ -76,7 +76,7 @@ class AdminController {
 
         res.render('profiledos', {
             ...user,
-            title: `Usuario Seleccionado - ${user.first_name}`,
+            title: `Usuario Seleccionado - ${user.firstname}`,
             style: 'profile',
             user: req.user ? {
                 ...req.user,

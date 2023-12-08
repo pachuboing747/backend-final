@@ -223,7 +223,7 @@ class ProductController {
                     const user = await userManager.getUserByEmail(productId.owner)
 
                     const template = `
-                    <h2>¡Hola ${user.first_name}, ${user.last_name}!</h2>
+                    <h2>¡Hola ${user.firstname}, ${user.lastname}!</h2>
                     <h4>Queriamos avisarte que el producto con id: ${productId._id} fue eliminado por un usuario Administrador.</h4>    
                     <br>
                     <h3>¡Muchas gracias, te esperamos pronto!</h3>

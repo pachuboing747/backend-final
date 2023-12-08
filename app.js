@@ -110,9 +110,10 @@
         app.use('/api', (req, res, next) => {
             req.io = io;
             next();
-        }, Routes.api);
+        }, Routes.api, cartsRouter);
 
-        app.use('/carts', cartsRouter);
+        // app.use('/carts', cartsRouter);
+        
 
         // ruta de la documentacion
         app.use('/apidocs', swaggerUiExpress.serve, swaggerUiExpress.setup(specs))

@@ -11,35 +11,32 @@
 </div>
 
 
-<div class="uk-child-width-1-4@m" uk-grid id="list-products">
-    {{#each products}}
-        <div id="{{this.id}}">
-            <div class="uk-card uk-card-default uk-card-hover uk-border-rounded" style="height: 580px">
-                <div class="uk-card-media-top uk-flex uk-flex-center" style="height: 200px;">
-                    <img alt="foto producto" src={{this.thumbnail}} />
-                </div>
-                <div class="uk-card-body" style="height: 400px; text-align: center;">
-                    <h3 class="uk-card-title" style="font-weight: bold;">{{ this.title }}</h3>
-                    <h5>${{this.price}}</h5>
-                    <p>{{this.description}}</p>
-                    <p>Stock: {{this.stock}} unidades</p>
-                    <p><span class="uk-badge" style="padding: 10px;">{{this.category}}</span></p>
-                    {{#if this.stock}}
-                    {{#if ../user.isPublic}}
-                        <button onclick="addToCart(`{{../idCart}},{{this.id}}`)" class="uk-button uk-button-secondary uk-button-small uk-border-rounded boton" >Agregar al carrito</button>
-                    {{/if}}
-                    {{/if}}
-                    {{#if ../user.isAdmin}}
-                        <button onclick="deleteProductAdmin(`{{this.id}}`)" class="uk-button uk-button-secondary uk-button-small uk-border-rounded botonX">Eliminar Producto</button>
-                        <a href="/admin/editarProducto">
-                            <button class="uk-button uk-button-secondary uk-button-small uk-border-rounded botonE">Editar Producto</button>
-                        </a>
-                    {{/if}}
-                    {{#if ../user.isPremium}}
-                        <button onclick="addToCart(`{{../idCart}},{{this.id}}`)" class="uk-button uk-button-secondary uk-button-small uk-border-rounded boton" >Agregar al carrito</button>
-                    {{/if}}
-                </div>
-            </div>
+<div id="products" class="uk-child-width-1-4@m" uk-grid>
+  {{#each products}}
+    <div>
+      <div class="uk-card uk-card-default">
+        <div class="uk-card-media-top">
+          <img alt="foto producto" />
         </div>
-    {{/each}}
+        <div class="uk-card-body">
+          <h3 class="uk-card-title">{{ this.title }}</h3>
+          <h5>USD ${{this.price}}</h5>
+          {{#each this.keywords}}
+            <span class="uk-badge">{{this}}</span>
+          {{/each}}
+          <p>{{this.description}}</p>
+          <div>
+               <form action="/products" method="POST">
+                <input type="hidden" name="productId" value="{{_id}}">
+                <input type="hidden" name="title" value="{{title}}">
+                <input type="hidden" name="price" value="{{price}}">
+                <input type="hidden" name="description" value="{{description}}">
+                <input type="hidden" name="stock" value="{{stock}}">
+                <button type="submit">Agregar al carrito</button>
+              </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  {{/each}}
 </div>

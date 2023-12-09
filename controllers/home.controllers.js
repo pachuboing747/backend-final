@@ -122,38 +122,46 @@ class HomeController {
 
     // Ruta del carrito
     async getCartHome(req, res) {
-
-        const { cid } = req.params
+        const { cid } = req.params;
         
-        let cart = await cartManager.getCartById({ _id: cid })
+        try {
+            let cart = await cartManager.getCartById({ _id: cid });
     
-        cart = await cart.populate({ path: 'products.product', select: [ 'title', 'price', 'category' ] })
+            if (!cart) {
+                return res.status(404).send({ error: 'Carrito no encontrado' });
+            }
     
-        const { products } = cart
+            cart = await cart.populate({ path: 'products.product', select: ['title', 'price', 'category'] });
     
-        products.map(prod => {
-            prod.product.price = prod.quantity * prod.product.price
-        })
-        
-        const totalCarrito = products.reduce((ac, pr) => ac = ac+pr.product.price, 0)
-
-        const cartId = await cartManager.getCartById(req.user.cart._id)
+            const { products } = cart;
     
-        res.render('carts', {   
-            title: 'Carrito De Compras',
-            user:  req.user ? {
-                ...req.user,
-                isAdmin: req.user.role == 'admin',
-                isPublic: req.user.role == 'Customer',
-                isPremium: req.user.role == 'Premium'
-            } : null,
-            products,
-            falseCart: !cartId.products.length,
-            cartLength: cartId.products.length,
-            idCart: cartId._id,
-            totalCarrito,
-            style: 'carts'
-        })
+            products.map(prod => {
+                prod.product.price = prod.quantity * prod.product.price;
+            });
+    
+            const totalCarrito = products.reduce((ac, pr) => ac + pr.product.price, 0);
+    
+            const cartId = await cartManager.getCartById(req.user.cart._id);
+    
+            res.render('carts', {
+                title: 'Carrito De Compras',
+                user: req.user ? {
+                    ...req.user,
+                    isAdmin: req.user.role == 'admin',
+                    isPublic: req.user.role == 'Customer',
+                    isPremium: req.user.role == 'Premium'
+                } : null,
+                products,
+                falseCart: !cartId.products.length,
+                cartLength: cartId.products.length,
+                idCart: cartId._id,
+                totalCarrito,
+                style: 'home'
+            });
+        } catch (error) {
+            console.error(error);
+            res.status(500).send({ error: 'Ocurrió un error en el sistema' });
+        }
     }
 
     // Ruta de la orden de compra
@@ -296,12 +304,18 @@ class HomeController {
 
     async carts(req, res) {
         try {
-            const cart = await cartManager.getCart();
-            res.send({ cart: cart });
+            const carts = await cartManager.getCart();
+          
+            res.render("carts", {
+                title: "Carrito",
+                carts,
+                style: "home"
+            })
+          
         } catch (error) {
             console.error(error);
             res.status(500).send({ error: 'Ocurrió un error en el sistema' });
-        }
+        } 
     }
     
     

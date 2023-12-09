@@ -20,6 +20,7 @@
         </div>
         <div class="uk-card-body">
           <h3 class="uk-card-title">{{ this.title }}</h3>
+          <img src="{{this.thumbnail}}" alt="{{this.title}}" width="100">
           <h5>USD ${{this.price}}</h5>
           {{#each this.keywords}}
             <span class="uk-badge">{{this}}</span>

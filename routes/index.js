@@ -12,20 +12,20 @@ const PremiumRouter = require('./premium.router')
 
 
 // api
-const router = Router()
+const api = Router();
 
 // ruta de productos
-router.use('/products', ProductRouter)
+api.use('/products', ProductRouter)
 
 // ruta del carrito
-router.use('/carts', CartRouter)
+api.use('/carts', CartRouter)
 
 // ruta del usuario
-router.use('/users', UserRouter)
+api.use('/users', UserRouter)
 
 // ruta del test
-router.use('/test', TestRouter)
-router.use('/loggerTest', LoggerTest)
+api.use('/test', TestRouter)
+api.use('/loggerTest', LoggerTest)
 
 // home
 const home = Router()
@@ -47,6 +47,6 @@ home.use('/premium', PremiumRouter)
 
 
 module.exports = {
-    api: router,
+    api,
     home
 }

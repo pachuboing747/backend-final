@@ -54,8 +54,8 @@ const errorExistingProduct = async (p) => {
 const userErrorInfo = (u) => {
     return `TODOS LOS CAMPOS SON OBLIGATORIOS
     CAMPOS REQUIRIDOS:
-    - First Name: ${u.firstname}
-    - Last Name: ${u.lastname}
+    - FirstName: ${u.firstname}
+    - LastName: ${u.lastname}
     - Email: ${u.email}
     - Age: ${u.age}
     - Role: ${u.role}

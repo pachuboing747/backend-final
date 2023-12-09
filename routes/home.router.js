@@ -16,4 +16,6 @@ router.get('/:cid/purchase', autenticacion, productsOutOfStock, homeControllers.
 
 router.get('/carts/:cid', autenticacion, homeControllers.getCartHome)
 
+router.get("/carts", homeControllers.carts)
+
 module.exports = router

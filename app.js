@@ -17,7 +17,7 @@
     const { PORT, HOST, MONGO_CONNECT, ADMIN_EMAIL, ADMIN_PASSWORD } = require('./config/config')
     const handleError = require('./middlewares/handleError')
 
-    const Routes = require('./routes/index.js')
+    const { api, home } = require('./routes/index.js')
     const SocketManager = require('./websocket')
     const initPassportLocal = require('./config/passport.init.js')
     const { isValidPassword } = require('./utils/password.js')
@@ -25,21 +25,15 @@
     const loggerMiddleware = require('./middlewares/logger.middleware')
     const eliminarUsuariosInactivosMiddleware = require('./middlewares/eliminarUsuariosInactivosMiddleware.js')
 
-    const cartsRouter = require ('./routes/carts.router.js')
-
-    try {
-        
-        // conectar la base de datos antes de levantar el server
-        
+    try { 
         await mongoDB.connect()
         
         const app = express()
         const server = http.createServer(app) 
-        const io = new Server(server) // SOCKET
+        const io = new Server(server)
         
         app.use(loggerMiddleware)
         
-        // Documentacion swagger
         const specs = swaggerJsDoc({
             definition: {
                 openapi: '3.0.1',
@@ -62,7 +56,7 @@
         app.set('views', path.join(__dirname, '/views'))
         app.set('view engine', 'handlebars')
         
-        app.use(express.urlencoded({ extended: true })) // Para poder parsear el body y los query params
+        app.use(express.urlencoded({ extended: true }))
         app.use(express.json())
         app.use('/static', express.static(path.join(__dirname + '/public')))
         app.use(cookieParser('secret'))
@@ -103,17 +97,10 @@
         })
 
         // ruta del home
-        app.use('/', Routes.home)
-
-        // ruta de las api
-       // En app.js
-        app.use('/api', (req, res, next) => {
-            req.io = io;
-            next();
-        }, Routes.api, cartsRouter);
-
-        // app.use('/carts', cartsRouter);
+        app.use('/', home)
         
+        // ruta de las api
+        app.use('/api', api)
 
         // ruta de la documentacion
         app.use('/apidocs', swaggerUiExpress.serve, swaggerUiExpress.setup(specs))
@@ -129,9 +116,10 @@
             logger.info(`Servidor leyendose desde http://${HOST}:${port}`)
         })
 
-        logger.warn('Se ha conectado a la base de datos de MongoDb')
+        logger.warn('Se ha conectado a la base de datos')
 
     } catch (error) {
         logger.error('No se ha podido conectar a la base de datos')
     }
 })()
+

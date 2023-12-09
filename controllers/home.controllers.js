@@ -293,6 +293,16 @@ class HomeController {
         })
     }
 
+    async carts (req, res){
+
+        const cart= await cartManager.getCart()
+          res.render("carts", {
+          title: "Carrito",
+          cart,
+          style: "carrito"
+        })
+    }
+
 }
 
 module.exports = new HomeController()

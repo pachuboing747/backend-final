@@ -51,8 +51,6 @@ async function SocketManager (socket) {
 
     })
 
-    // logica de los mensajes
-    // obtengo todos los mensajes de la base de datos
 
     const messages = await chatMessageManager.getMessages()
 

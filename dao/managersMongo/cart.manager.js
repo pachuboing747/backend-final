@@ -13,12 +13,12 @@ class CartManager {
         return cart
     }
 
-    async getCart (){
-
-        const cart = await cartModel.find({}).lean()
-
-        return cart
+    async getCart() {
+        const cart = await cartModel.find({}).lean();
+        console.log(cart);
+        return cart;
     }
+    
 
     async getCartById (id) {
 

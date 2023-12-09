@@ -52,6 +52,15 @@ class CartManager {
         await fs.writeFile(this.filepath, JSON.stringify(cart, null, 2))
     }
 
+    
+    async getAll () {
+        const data = await fs.readFile(this.filepath, 'utf-8')
+        const cart = JSON.parse(data)
+
+        return cart
+    }
+    
+
 }
 
 module.exports = CartManager

@@ -4,10 +4,14 @@ const { productsOutOfStock, policiesCustomerAndPremium } = require('../../middle
 
 const router = Router()
 
+router.get("/", cartController.getAll);
+
 // Creacion de un nuevo CARRITO
 router.post('/', cartController.addCart)
 
 router.get('/', cartController.getCart)
+
+
 
 // Leer los productos del carrito con su C-ID
 

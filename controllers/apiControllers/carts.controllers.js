@@ -12,7 +12,6 @@ const mailSenderService = require('../../services/mail.sender.service')
 class CartController {
 
 
-    // Creacion de un nuevo CARRITO
     async addCart (req, res) {
     
         const result = await cartManager.addCart()
@@ -20,7 +19,6 @@ class CartController {
     
     }
 
-    // Mostrar todos los carritos
     async getCart (req, res) {
 
         const cart = await cartManager.getCart()
@@ -28,7 +26,6 @@ class CartController {
     
     }
 
-    // Leer los productos del carrito con su C-ID
     async getCartById (req, res, next) {
         const { cid } = req.params
     
@@ -55,7 +52,6 @@ class CartController {
     
     }
 
-    // Agregar productos a los carritos
     async addProductCart (req, res, next) {
         const { cid, idProduct } = req.params
     
@@ -112,7 +108,6 @@ class CartController {
         }
     }
 
-    // Eliminar producto dentro del carrito
     async deleteProductCart (req, res, next) {
         const {cid, idProduct} = req.params
     
@@ -150,7 +145,6 @@ class CartController {
         }
     }
 
-    // Eliminar todos los productos del carrito
     async deleteCart (req, res, next) {
         const { cid } = req.params
     
@@ -177,7 +171,6 @@ class CartController {
         }
     }
 
-    // Eliminar carrito
     async deleteEntireCart(req, res, next) {
         const { cid } = req.params
     
@@ -204,7 +197,6 @@ class CartController {
         }
     }
 
-    // Modificar carrito
     async updateCart (req, res, next) {
         const { cid } = req.params
         const { body } = req
@@ -230,7 +222,6 @@ class CartController {
         }
     }
 
-    // Modificar producto dentro del carrito
     async updateProductCart (req, res, next) {
         const { cid, idProduct } = req.params
         const { body } = req
@@ -274,13 +265,10 @@ class CartController {
     
     }
 
-    // ORDENES DE COMPRA
-    // Crear la orden de compra
     async addOrderCart (req, res) {
         const { cid } = req.params
 
         try {
-            // Ejecutamos un metodo para crear la orden de compra
         
                 let cart = await cartManager.getCartById(cid)
         
@@ -293,7 +281,7 @@ class CartController {
                 const productsDelete = []
         
                 for (const { product: id, quantity } of productsInCart) {
-                    // Chequeo el Stock
+            
                     
                     const p = await productManager.getProductById(id)
         
@@ -309,7 +297,7 @@ class CartController {
                         quantity: toBuy
                     })
                     
-                    // Array de productos que no pudieron comprarse
+                    
                     if(quantity > p.stock){
                         productsDelete.push({
                             id: p._id,
@@ -317,19 +305,19 @@ class CartController {
                         })
                     } 
                     
-                    // Actualizacion del carrito de compras
+                
                     if(p.stock > quantity){
                         await cartManager.deleteProductsCart(cid)
                     }
                     
-                    // Actualizamos el Stock
+                
                     p.stock = p.stock - toBuy
                     
                     await p.save()
                     
                 }
         
-                // Dejar el carrito de compras con los productos que no pudieron comprarse. 
+               
                 for(const { id, unPurchasedQuantity } of productsDelete) {
                     await cartManager.addProductCart(cid, id)
                     await cartManager.updateProductCart(cid, {quantity: unPurchasedQuantity}, id)
@@ -337,7 +325,7 @@ class CartController {
         
                 cart = await cart.populate({ path: 'user', select: [ 'email', 'firstname', 'lastname' ] })
         
-                //FECHA
+        
                 const today = new Date()
                 const hoy = today.toLocaleString()
         
@@ -357,7 +345,7 @@ class CartController {
 
                 purchaseManager.addOrder(order)
         
-                // Envio de Ticket al mail
+            
         
                 const template = `
                     <h2>¡Hola ${cart.user.firstname}!</h2>
@@ -394,7 +382,6 @@ class CartController {
 
     }
 
-    // Mostrar todas las ordenes de compra
 
     async getOrders (req, res) {
 
@@ -403,7 +390,7 @@ class CartController {
         res.send(orders)
     }
 
-    // Mostrar la orden por ID
+
     async getOrderById (req, res, next) {
         const { id } = req.params
 
@@ -429,7 +416,7 @@ class CartController {
         }
     }
 
-    // Eliminar una orden de compra
+
     async deleteOrder (req, res, next) {
         const { id } = req.params
 
@@ -454,6 +441,31 @@ class CartController {
             logger.error(error)
             res.status(500).send({ error: 'Ocurrio un error en el sistema'})
         }
+    }
+
+    async getAll  (req, res) {
+
+        const { search, max, min, limit } = req.query;
+        const cart = await cartManager.getCart();
+      
+        let filtrados = cart;
+      
+        if (search) {
+          filtrados = filtrados.filter(
+            (p) =>
+              p.keywords.includes(search.toLowerCase()) ||
+              p.title.toLowerCase().includes(search.toLowerCase()) ||
+              p.description.toLowerCase().includes(search.toLowerCase())
+          );
+        }
+      
+        if (min || max) {
+          filtrados = filtrados.filter(
+            (p) => p.price >= (+min || 0) && p.price <= (+max || Infinity)
+          );
+        }
+      
+        res.send(filtrados);
     }
 
 }

@@ -293,16 +293,19 @@ class HomeController {
         })
     }
 
-    async carts (req, res){
 
-        const cart= await cartManager.getCart()
-          res.render("carts", {
-          title: "Carrito",
-          cart,
-          style: "carrito"
-        })
+    async carts(req, res) {
+        try {
+            const cart = await cartManager.getCart();
+            res.send({ cart: cart });
+        } catch (error) {
+            console.error(error);
+            res.status(500).send({ error: 'Ocurrió un error en el sistema' });
+        }
     }
-
+    
+    
+    
 }
 
 module.exports = new HomeController()

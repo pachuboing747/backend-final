@@ -38,30 +38,30 @@ class ProductController {
         const { docs: products, ...pageInfo } = await productManager.getProducts( page, limit, query, sort )
     
         if(query){
-            pageInfo.prevLink = pageInfo.hasPrevPage ? `https://proyectocoderhouse.up.railway.app/?page=${pageInfo.prevPage}&limit=${pageInfo.limit}&query=${query}` : null
-            pageInfo.nextLink = pageInfo.hasNextPage ? `https://proyectocoderhouse.up.railway.app/?page=${pageInfo.nextPage}&limit=${pageInfo.limit}&query=${query}` : null
+            pageInfo.prevLink = pageInfo.hasPrevPage ? `https://final-production-2857.up.railway.app/?page=${pageInfo.prevPage}&limit=${pageInfo.limit}&query=${query}` : null
+            pageInfo.nextLink = pageInfo.hasNextPage ? `https://final-production-2857.up.railway.app/?page=${pageInfo.nextPage}&limit=${pageInfo.limit}&query=${query}` : null
         } else if (query && sort){
-            pageInfo.prevLink = pageInfo.hasPrevPage ? `https://proyectocoderhouse.up.railway.app/?page=${pageInfo.prevPage}&limit=${pageInfo.limit}&query=${query}&sort=${sort}` : null
+            pageInfo.prevLink = pageInfo.hasPrevPage ? `https://final-production-2857.up.railway.app/?page=${pageInfo.prevPage}&limit=${pageInfo.limit}&query=${query}&sort=${sort}` : null
     
-            pageInfo.nextLink = pageInfo.hasNextPage ? `https://proyectocoderhouse.up.railway.app/?page=${pageInfo.nextPage}&limit=${pageInfo.limit}&query=${query}&sort=${sort}` : null
+            pageInfo.nextLink = pageInfo.hasNextPage ? `https://final-production-2857.up.railway.app/?page=${pageInfo.nextPage}&limit=${pageInfo.limit}&query=${query}&sort=${sort}` : null
         } else {
-            pageInfo.prevLink = pageInfo.hasPrevPage ? `https://proyectocoderhouse.up.railway.app/?page=${pageInfo.prevPage}&limit=${pageInfo.limit}` : null
+            pageInfo.prevLink = pageInfo.hasPrevPage ? `https://final-production-2857.up.railway.app/?page=${pageInfo.prevPage}&limit=${pageInfo.limit}` : null
     
-            pageInfo.nextLink = pageInfo.hasNextPage ? `https://proyectocoderhouse.up.railway.app/?page=${pageInfo.nextPage}&limit=${pageInfo.limit}` : null
+            pageInfo.nextLink = pageInfo.hasNextPage ? `https://final-production-2857.up.railway.app/?page=${pageInfo.nextPage}&limit=${pageInfo.limit}` : null
         }
     
         if(sort){
-            pageInfo.prevLink = pageInfo.hasPrevPage ? `https://proyectocoderhouse.up.railway.app/?page=${pageInfo.prevPage}&limit=${pageInfo.limit}&sort=${sort}` : null
-            pageInfo.nextLink = pageInfo.hasNextPage ? `https://proyectocoderhouse.up.railway.app/?page=${pageInfo.nextPage}&limit=${pageInfo.limit}&sort=${sort}` : null
+            pageInfo.prevLink = pageInfo.hasPrevPage ? `https://final-production-2857.up.railway.app/?page=${pageInfo.prevPage}&limit=${pageInfo.limit}&sort=${sort}` : null
+            pageInfo.nextLink = pageInfo.hasNextPage ? `https://final-production-2857.up.railway.app/?page=${pageInfo.nextPage}&limit=${pageInfo.limit}&sort=${sort}` : null
         } else if (query && sort){
-            pageInfo.prevLink = pageInfo.hasPrevPage ? `https://proyectocoderhouse.up.railway.app/?page=${pageInfo.prevPage}&limit=${pageInfo.limit}&query=${query}&sort=${sort}` : null
+            pageInfo.prevLink = pageInfo.hasPrevPage ? `https://final-production-2857.up.railway.app/?page=${pageInfo.prevPage}&limit=${pageInfo.limit}&query=${query}&sort=${sort}` : null
     
-            pageInfo.nextLink = pageInfo.hasNextPage ? `https://proyectocoderhouse.up.railway.app/?page=${pageInfo.nextPage}&limit=${pageInfo.limit}&query=${query}&sort=${sort}` : null
+            pageInfo.nextLink = pageInfo.hasNextPage ? `https://final-production-2857.up.railway.app/?page=${pageInfo.nextPage}&limit=${pageInfo.limit}&query=${query}&sort=${sort}` : null
         } else{
             
-            pageInfo.prevLink = pageInfo.hasPrevPage ? `https://proyectocoderhouse.up.railway.app/?page=${pageInfo.prevPage}&limit=${pageInfo.limit}` : null
+            pageInfo.prevLink = pageInfo.hasPrevPage ? `https://final-production-2857.up.railway.app/?page=${pageInfo.prevPage}&limit=${pageInfo.limit}` : null
         
-            pageInfo.nextLink = pageInfo.hasNextPage ? `https://proyectocoderhouse.up.railway.app/?page=${pageInfo.nextPage}&limit=${pageInfo.limit}` : null
+            pageInfo.nextLink = pageInfo.hasNextPage ? `https://final-production-2857.up.railway.app/?page=${pageInfo.nextPage}&limit=${pageInfo.limit}` : null
     
         }
             

@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start:express": "nodemon app.js",
+    "dev": "nodemon app.js",
+    "start": "node app.js",
     "seed:products": "node ./scripts/seed.productos.js",
     "seed:user": "node ./scripts/seed.user.js",
     "test:products": "mocha test/test.products.js",

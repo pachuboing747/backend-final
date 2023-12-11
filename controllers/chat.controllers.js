@@ -1,12 +1,12 @@
 const ManagerFactory = require('../dao/managersMongo/manager.factory')
 
-const cartManager = ManagerFactory.getManagerInstance('carts')
+const userManager = ManagerFactory.getManagerInstance('users')
 
-class CartController {
+class ChatController {
 
     async getChat (req, res) {
 
-        const cart = await cartManager.getCartById(req.user.cart._id)
+        const user = await userManager.getUserById(req.user._id)
     
         res.render('chatmessage', {
             title: 'Chat',
@@ -16,7 +16,7 @@ class CartController {
                 isPublic: req.user.role == 'Customer',
                 isPremium: req.user.role == 'Premium'
             },
-            idCart: cart._id,
+            idUser: user._id,
             style: 'chatmessage'
         })
     
@@ -24,4 +24,4 @@ class CartController {
 
 }
 
-module.exports = new CartController()
+module.exports = new ChatController()

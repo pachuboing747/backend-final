@@ -38,7 +38,7 @@ class UserController {
         } else{
             const users = await userManager.getUsers()
             const usuarioSinPassword = users.map(user => {
-                // Crea una copia del objeto de usuario excluyendo la contraseña
+
                 const { _id, password, age, cart, last_connection, documents, ...usuarioSinPassword } = user;
                 return usuarioSinPassword;
             });
@@ -47,7 +47,6 @@ class UserController {
     
     }
 
-    // Mostrar usuarios por ID
     async getUserById (req, res, next) {
         const { id } = req.params
     
@@ -72,7 +71,6 @@ class UserController {
     
     }
 
-    // Creacion de Usuario
     async addUser (req, res, next) {
 
         const { firstname, lastname, email, age, role, password } = req.body
@@ -107,7 +105,6 @@ class UserController {
     
     }
 
-    // Modificar Usuarios
     async updateUser (req, res, next) {
 
         const { id } = req.params
@@ -138,7 +135,6 @@ class UserController {
     
     }
 
-    // Eliminar usuario
     async deleteUser (req, res, next) {
 
         const { id } = req.params
@@ -170,7 +166,6 @@ class UserController {
     
     }
 
-    // CAMBIAR USUARIOS PREMIUM a CUSTOMER Y VICEVERSA
 
     async premiumCustomer (req, res, next){
         const uid = req.params.uid
@@ -241,10 +236,8 @@ class UserController {
 
     }
 
-    // Mostrar en Handlebars
-
    
-async premiumCustomerView(req, res) {
+    async premiumCustomerView(req, res) {
     const uid = req.params.uid;
 
     try {
@@ -372,8 +365,6 @@ async premiumCustomerView(req, res) {
         }
 
     }
-
-    // CREACION DE DOCUMENTOS
 
     async postDocuments ( req, res ){
 

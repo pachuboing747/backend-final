@@ -5,7 +5,7 @@ const { productsOutOfStock } = require('../middlewares/policies.middleware')
 
 const router = Router()
 
-// rutas de home de HTML
+
 
 router.get('/', homeControllers.getHome)
 router.post('/', homeControllers.postHome)

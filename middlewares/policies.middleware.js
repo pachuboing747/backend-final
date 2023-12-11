@@ -6,7 +6,7 @@ function policiesCustomer (req, res, next) {
 
     if(req.user.role !== 'Customer') {
         return res.status(401).send({
-            error: "Not a valid user"
+            error: "El usuario no es valido"
         })
     }
 
@@ -19,7 +19,7 @@ function policiesCustomerAndPremium (req, res, next) {
         next()
     } else {
         return res.status(401).send({
-            error: "Not a valid user"
+            error: "No es un usuario valido"
         })
     }
     
@@ -29,7 +29,7 @@ function policiesAdmin (req, res, next) {
 
     if(req.user.role !== 'admin') {
         return res.status(401).send({
-            error: "Not a valid user"
+            error: "no eres un asuario valido"
         })
     }
     

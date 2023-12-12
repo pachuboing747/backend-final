@@ -14,13 +14,13 @@ class CartController {
 
     async addCart(req, res) {
         try {
-          const { body } = req; // Obtén los datos del producto desde el cuerpo de la solicitud
-          console.log('Request Body:', body); // Verifica qué datos del producto se están enviando
-          const result = await cartManager.addCart(body); // Pasa los datos del producto al método addCart
-          console.log('Result:', result); // Verifica el resultado del método addCart
+          const { body } = req; 
+          console.log('Request Body:', body);
+          const result = await cartManager.addCart(body); 
+          console.log('Result:', result); 
           res.status(201).send({ Created: 'El carrito fue creado con éxito!', payload: result });
         } catch (error) {
-          console.error('Error en addCart:', error); // Agrega mensajes de log para detectar errores
+          console.error('Error en addCart:', error);
           res.status(500).send({ error: 'Ocurrió un error en el sistema' });
         }
     }

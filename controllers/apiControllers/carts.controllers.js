@@ -25,14 +25,16 @@ class CartController {
         }
     }
     
-      
-
-    async getCart (req, res) {
-
-        const cart = await cartManager.getCart()
-        res.send(cart)
-    
+    async getCart(req, res) {
+        try {
+            const cart = await cartManager.getCart();
+            res.render('carts', { cartId: cart }); // Asegúrate de ajustar el nombre de la plantilla
+        } catch (error) {
+            console.error('Error al obtener el carrito:', error);
+            res.status(500).send('Error al obtener el carrito');
+        }
     }
+    
 
     async getCartById (req, res, next) {
         const { cid } = req.params

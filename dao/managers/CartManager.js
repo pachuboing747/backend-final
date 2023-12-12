@@ -33,24 +33,25 @@ class CartManager {
         return cartId
     }
 
-    async addProductCart (cid, id) {
-        const data = await fs.readFile(this.filepath, 'utf-8')
-        const cart = JSON.parse(data)
-
-        const cartId = cart.find(cart => cart.id == cid)
-        const productId = cartId.products.find(prod => prod.product == id)
-
-        if(!productId){
-            cartId.products.push({
-                product: id,
-                quantity: 1
-            })
+    async addProductCart(cid, id) {
+        const data = await fs.readFile(this.filepath, 'utf-8');
+        const cart = JSON.parse(data);
+      
+        const cartId = cart.find(cart => cart.id == cid);
+        const productId = cartId.products.find(prod => prod.product == id);
+      
+        if (!productId) {
+          cartId.products.push({
+            product: id,
+            quantity: 1
+          });
         } else {
-            productId.quantity = productId.quantity + 1
+          productId.quantity = productId.quantity + 1;
         }
-        
-        await fs.writeFile(this.filepath, JSON.stringify(cart, null, 2))
-    }
+      
+        await fs.writeFile(this.filepath, JSON.stringify(cart, null, 2));
+      }
+      
 
     
     async getAll () {

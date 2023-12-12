@@ -123,7 +123,7 @@ class HomeController {
     // Ruta del carrito
     async getCartHome(req, res) {
         const { cid } = req.params;
-        
+    
         try {
             let cart = await cartManager.getCartById({ _id: cid });
     
@@ -141,8 +141,6 @@ class HomeController {
     
             const totalCarrito = products.reduce((ac, pr) => ac + pr.product.price, 0);
     
-            const cartId = await cartManager.getCartById(req.user.cart._id);
-    
             res.render('carts', {
                 title: 'Carrito De Compras',
                 user: req.user ? {
@@ -152,9 +150,9 @@ class HomeController {
                     isPremium: req.user.role == 'Premium'
                 } : null,
                 products,
-                falseCart: !cartId.products.length,
-                cartLength: cartId.products.length,
-                idCart: cartId._id,
+                falseCart: !cart.products.length,
+                cartLength: cart.products.length,
+                idCart: cart._id,
                 totalCarrito,
                 style: 'home'
             });
@@ -163,6 +161,7 @@ class HomeController {
             res.status(500).send({ error: 'Ocurrió un error en el sistema' });
         }
     }
+    
 
     // Ruta de la orden de compra
     async getOrderHome(req, res) {

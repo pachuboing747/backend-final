@@ -24,7 +24,8 @@
     const logger = require('./logger/index')
     const loggerMiddleware = require('./middlewares/logger.middleware')
     const eliminarUsuariosInactivosMiddleware = require('./middlewares/eliminarUsuariosInactivosMiddleware.js')
-
+    const homeController = require('./controllers/home.controllers.js');
+    const cartController = require('./controllers/apiControllers/carts.controllers.js');
     try { 
         await mongoDB.connect()
         
@@ -60,7 +61,14 @@
         app.use(express.json())
         app.use('/static', express.static(path.join(__dirname + '/public')))
         app.use(cookieParser('secret'))
+      
         
+        // Ejecutamos funcion de eliminar usuarios inactivos
+        eliminarUsuariosInactivosMiddleware()
+        
+        //Registramos los middlewares de passport
+        initPassportLocal()
+
         app.use(session({
             secret: 'secret',
             resave: true,
@@ -70,12 +78,6 @@
                 ttl: 60 * 60
             })
         }))
-        
-        // Ejecutamos funcion de eliminar usuarios inactivos
-        eliminarUsuariosInactivosMiddleware()
-        
-        //Registramos los middlewares de passport
-        initPassportLocal()
         app.use(passport.initialize())
         app.use(passport.session())
         
@@ -107,6 +109,9 @@
 
         app.use(handleError)
         
+        app.post('/', homeController.postHome);
+        app.post('/carts', cartController.addCart)
+
         // WEB SOCKET
         io.on('connection', SocketManager)
         

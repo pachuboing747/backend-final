@@ -1,21 +1,35 @@
-<body>
-  {{#each carts}}
-    <h2>Id del Producto: {{_id}}</h2>
-    <ul>
-      {{#each products}}
-        <li>
-            {{#if this.thumbnail}}
-                <img src="{{this.thumbnail}}" alt="imagen">
-                {{else}}
-                <p>Imagen no disponible</p>
-            {{/if}}
-          <p>Cantidad: {{this.qty}}</p>
-           <h5>ARG ${{this.price}}</h5>
-            <p>{{this.description}}</p>
-            <p>{{this.code}}</p>
-            <p>{{this.stock}}</p>
-        </li>
+{{#if cartId.products.length}}
+  <div class="uk-flex uk-flex-between align-cart">
+    <div>
+      <h5 class="uk-margin-remove" style="font-weight: bold;">Total: ${{totalCarrito}}</h5>
+    </div>
+    <div>
+      <a href="/{{idCart}}/purchase">
+        <button class="uk-margin-remove uk-button uk-button-secondary uk-button-small uk-margin-top uk-border-rounded">Confirmar Compra</button>
+      </a>
+    </div>
+  </div>
+
+  <div class="uk-margin-top uk-child-width-1-4@m" uk-grid id="productsInCart">
+    {{#each cartId.products}}
+        <div id="{{this.product.id}}">
+          <div class="uk-card uk-card-default uk-card-hover uk-border-rounded" style="border: 0.5px solid black">
+            <div class="uk-card-body" style="height: 350px; text-align: center;">
+              <h3 class="uk-card-title" style="font-weight: bold;">{{this.product.title}}</h3>
+              <h5>Cantidad a Comprar: {{this.quantity}}</h5>
+              <h5>Precio Total: ${{this.product.price}}</h5>
+              <br>
+              <button data-cart-id="{{../idCart}}" data-product-id="{{this.product.id}}" class="delete-product-button uk-button uk-button-secondary uk-button-small uk-margin-top uk-border-rounded">Eliminar</button>
+            </div>
+          </div>
+        </div>
       {{/each}}
-    </ul>
-  {{/each}}
-</body>
+  </div>
+
+{{else}}
+  <h3>El carrito de compras está vacío</h3>
+  <h4>Agregue un producto a su carrito</h4>
+  <a href="/">
+    <button class="uk-margin-remove uk-button uk-button-secondary uk-button-small uk-margin-top uk-border-rounded">Volver</button>
+  </a>
+{{/if}}

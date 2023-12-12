@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "dev": "nodemon app.js",
-    "start": "node app.js",
+    "start": "nodemon app.js",
     "seed:products": "node ./scripts/seed.productos.js",
     "seed:user": "node ./scripts/seed.user.js",
     "test:products": "mocha test/test.products.js",

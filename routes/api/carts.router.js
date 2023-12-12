@@ -1,6 +1,6 @@
 const { Router } = require('express')
 const cartController = require('../../controllers/apiControllers/carts.controllers')
-const { productsOutOfStock, policiesCustomerAndPremium } = require('../../middlewares/policies.middleware')
+const { productsOutOfStock } = require('../../middlewares/policies.middleware')
 
 const router = Router()
 
@@ -17,7 +17,7 @@ router.get('/', cartController.getCart)
 
 router.get('/:cid', cartController.getCartById)
 
-router.post('/:cid/products/:idProduct', policiesCustomerAndPremium, cartController.addProductCart)
+router.post('/:cid/products/:idProduct', cartController.addProductCart)
 
 router.delete('/:cid/products/:idProduct', cartController.deleteProductCart)
 

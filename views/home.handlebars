@@ -27,7 +27,7 @@
           {{/each}}
           <p>{{this.description}}</p>
           <div>
-               <form action="/products" method="POST">
+               <form action="/carts" method="POST">
                 <input type="hidden" name="productId" value="{{_id}}">
                 <input type="hidden" name="title" value="{{title}}">
                 <input type="hidden" name="price" value="{{price}}">
